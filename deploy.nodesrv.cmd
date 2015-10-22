@@ -54,8 +54,8 @@ IF NOT DEFINED KUDU_SYNC_COMMAND (
 echo Handling node.js deployment.
 
 :: 1. KuduSync
-echo Kudu Sync from "%DEPLOYMENT_SOURCE%\nodejs" to "%DEPLOYMENT_TARGET%"
-call %KUDU_SYNC_COMMAND% -q -f "%DEPLOYMENT_SOURCE%\nodejs" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.deployment;deploy.cmd" 2>nul
+echo Kudu Sync from "%DEPLOYMENT_SOURCE%\nodesrv" to "%DEPLOYMENT_TARGET%"
+call %KUDU_SYNC_COMMAND% -q -f "%DEPLOYMENT_SOURCE%\nodesrv" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.deployment;deploy.cmd" 2>nul
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Install npm packages

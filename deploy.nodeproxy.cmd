@@ -46,34 +46,25 @@ IF NOT DEFINED KUDU_SYNC_COMMAND (
   :: Locally just running "kuduSync" would also work
   SET KUDU_SYNC_COMMAND=node "%appdata%\npm\node_modules\kuduSync\bin\kuduSync"
 )
-IF NOT DEFINED DEPLOYMENT_TEMP (
-  SET DEPLOYMENT_TEMP=%temp%\___deployTemp%random%
-  SET CLEAN_LOCAL_DEPLOYMENT_TEMP=true
-)
-
-IF DEFINED CLEAN_LOCAL_DEPLOYMENT_TEMP (
-  IF EXIST "%DEPLOYMENT_TEMP%" rd /s /q "%DEPLOYMENT_TEMP%"
-  mkdir "%DEPLOYMENT_TEMP%"
-)
-
-IF NOT DEFINED MSBUILD_PATH (
-  SET MSBUILD_PATH=%WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe
-)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
 
-echo Handling .NET Web Application deployment.
+echo Handling node.js deployment.
 
-:: 1. Build to the temporary path
-%MSBUILD_PATH% "%DEPLOYMENT_SOURCE%\mvc4\Mvc4WebApplication\Mvc4WebApplication.csproj" /nologo /verbosity:m /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release /p:SolutionDir="%DEPLOYMENT_SOURCE%\mvc4"
+:: 1. KuduSync
+echo Kudu Sync from "%DEPLOYMENT_SOURCE%\nodeproxy" to "%DEPLOYMENT_TARGET%"
+call %KUDU_SYNC_COMMAND% -q -f "%DEPLOYMENT_SOURCE%\nodeproxy" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.deployment;deploy.cmd" 2>nul
 IF !ERRORLEVEL! NEQ 0 goto error
 
-:: 2. KuduSync
-echo Kudu Sync from "%DEPLOYMENT_TEMP%" to "%DEPLOYMENT_TARGET%"
-call %KUDU_SYNC_COMMAND% -q -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.deployment;deploy.cmd" 2>nul
-IF !ERRORLEVEL! NEQ 0 goto error
+:: 2. Install npm packages
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
+  pushd %DEPLOYMENT_TARGET%
+  call npm install --production
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
