@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9186D71-B3E3-4C1E-BBED-D7674100EB4A}"
+	ProjectSection(SolutionItems) = preProject
+		MultipleWebSitesDeploy\.deployment = MultipleWebSitesDeploy\.deployment
+		MultipleWebSitesDeploy\.gitignore = MultipleWebSitesDeploy\.gitignore
+		MultipleWebSitesDeploy\deploy.cmd = MultipleWebSitesDeploy\deploy.cmd
+		MultipleWebSitesDeploy\deploy.mvcproxy.cmd = MultipleWebSitesDeploy\deploy.mvcproxy.cmd
+		MultipleWebSitesDeploy\deploy.nodesrv.cmd = MultipleWebSitesDeploy\deploy.nodesrv.cmd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nodesrv", "nodesrv", "{5D352D8D-1025-45D0-A34E-E7716F16A498}"
+	ProjectSection(SolutionItems) = preProject
+		MultipleWebSitesDeploy\nodejssrv\iisnode.yml = MultipleWebSitesDeploy\nodejssrv\iisnode.yml
+		MultipleWebSitesDeploy\nodejssrv\server.js = MultipleWebSitesDeploy\nodejssrv\server.js
+		MultipleWebSitesDeploy\nodejssrv\web.config = MultipleWebSitesDeploy\nodejssrv\web.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nodeproxy", "nodeproxy", "{842A36F8-CFDA-4CE7-8755-22E4607FDBD3}"
+	ProjectSection(SolutionItems) = preProject
+		MultipleWebSitesDeploy\nodejsproxy\iisnode.yml = MultipleWebSitesDeploy\nodejsproxy\iisnode.yml
+		MultipleWebSitesDeploy\nodejsproxy\server.js = MultipleWebSitesDeploy\nodejsproxy\server.js
+		MultipleWebSitesDeploy\nodejsproxy\web.config = MultipleWebSitesDeploy\nodejsproxy\web.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5D352D8D-1025-45D0-A34E-E7716F16A498} = {C9186D71-B3E3-4C1E-BBED-D7674100EB4A}
+		{842A36F8-CFDA-4CE7-8755-22E4607FDBD3} = {C9186D71-B3E3-4C1E-BBED-D7674100EB4A}
+	EndGlobalSection
+EndGlobal
