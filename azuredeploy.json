@@ -47,7 +47,7 @@
         },
         "repoURL": {
             "type": "string",
-            "defaultValue": "https://github.com/stephgou/MultiNodeWebAppDeploy",
+            "defaultValue": "https://github.com/stephgou/MultiNodeWebAppDeploy.git",
             "metadata": {
                 "description": "The URL for the GitHub repository that contains the project to deploy."
             }
