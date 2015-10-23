@@ -59,8 +59,9 @@
           "description": "The branch of the GitHub repository to use."
         }
       },
-              "WebSite2Name": {
-            "type": "string"
+      "WebSite2Name": {
+        "type": "string",
+        "defaultValue": "zkreeaopzeorero"
         }
     },
   "resources":[
