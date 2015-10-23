@@ -62,7 +62,7 @@
         },
         "SiteName2": {
             "type": "string",
-            "defaultValue": "azazazmaster",
+            "defaultValue": "concat(parameters('siteName'), '-proxy')",
             "metadata": { 
                 "description": "Will it work"
             }
