@@ -28,6 +28,7 @@
                 "Basic",
                 "Standard"
             ],
+            "defaultValue": "Free",
             "metadata": {
                 "description": "The pricing tier for the hosting plan."
             }
