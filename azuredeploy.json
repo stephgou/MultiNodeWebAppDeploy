@@ -153,7 +153,7 @@
           "type": "config",
           "name": "web",
           "dependsOn": [
-            "[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
+            "[concat('Microsoft.Web/Sites/', parameters('siteName2'))]"
           ],
           "properties": {
             "webSocketsEnabled": true,
@@ -172,7 +172,7 @@
           "name": "appsettings",
           "type": "config",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName2'))]"
           ],
           "properties": {
             "SITE_FLAVOR": "nodeproxy"
@@ -183,7 +183,7 @@
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName2'))]"
           ],
           "properties": {
             "RepoUrl": "[parameters('repoURL')]",
