@@ -1,0 +1,144 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "siteName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the web app that you wish to create."
+            }
+        },
+        "hostingPlanName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the App Service plan to use for hosting the web app."
+            }
+        },
+        "siteLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "The location to use for creating the web app and hosting plan. It must be one of the Azure locations that support web apps."
+            }
+        },
+        "sku": {
+            "type": "string",
+            "allowedValues": [
+                "Free",
+                "Shared",
+                "Basic",
+                "Standard",
+                "Premium"
+            ],
+            "defaultValue": "Free",
+            "metadata": {
+                "description": "The pricing tier for the hosting plan."
+            }
+        },
+        "workerSize": {
+            "type": "string",
+            "allowedValues": [
+                "0",
+                "1",
+                "2"
+            ],
+            "defaultValue": "0",
+            "metadata": {
+                "description": "The instance size of the hosting plan (small, medium, or large)."
+            }
+        },
+        "repoURL": {
+            "type": "string",
+            "defaultValue": "https://github.com/stephgou/MultiNodeWebAppDeploy.git",
+            "metadata": {
+                "description": "The URL for the GitHub repository that contains the project to deploy."
+            }
+        },
+        "branch": {
+            "type": "string",
+            "defaultValue": "master",
+            "metadata": { 
+                "description": "The branch of the GitHub repository to use."
+            }
+        }
+    },
+  "resources":[
+    {
+      "apiVersion": "2014-06-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('siteLocation')]",
+      "tags": {
+        "displayName": "HostingPlan"
+      },
+      "properties": {
+        "name": "[parameters('hostingPlanName')]",
+        "sku": "[parameters('sku')]",
+        "workerSize": "[parameters('workerSize')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "apiVersion": "2014-06-01",
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('siteLocation')]",
+      "tags": {
+            "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "Resource",
+            "displayName": "Website"
+        },
+      "dependsOn": [
+          "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      ],
+      "properties": {
+          "name": "[parameters('siteName')]",
+          "serverFarm": "[parameters('hostingPlanName')]"
+      },
+      "resources":[
+        {
+          "apiVersion": "2014-04-01",
+          "type": "config",
+          "name": "web",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
+          ],
+          "properties": {
+            "webSocketsEnabled": true,
+            "virtualApplications": [
+              {
+                "virtualPath": "/",
+                "physicalPath": "site\\wwwroot",
+                "preloadEnabled": false,
+                "virtualDirectories": null
+              }
+            ]
+          }
+        },
+         {
+          "apiVersion": "2014-11-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "SITE_FLAVOR": "nodesrv"
+           }
+        },
+       {
+          "apiVersion":"2015-04-01",
+          "name":"web",
+          "type":"sourcecontrols",
+          "dependsOn":[
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties":{
+            "RepoUrl":"[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration":true
+          }
+        }
+      ]
+    }
+  ]
+}
+

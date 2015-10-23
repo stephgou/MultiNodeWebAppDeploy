@@ -1,6 +1,6 @@
 {
   "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
+  "contentVersion": "1.0.0.0sever²
   "parameters": {
     "siteName": {
       "type": "string"
@@ -33,7 +33,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2014-11-01",
+      "apiVersion": "2014-06-01",
       "name": "[parameters('hostingPlanName')]",
       "type": "Microsoft.Web/serverfarms",
       "location": "[parameters('siteLocation')]",
@@ -44,48 +44,36 @@
         "numberOfWorkers": 1
       }
     },
-    {
-      "apiVersion": "2014-11-01",
-      "name": "[parameters('siteName')]",
-      "type": "Microsoft.Web/sites",
-      "location": "[parameters('siteLocation')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
-      ],
-      "properties": {
-        "serverFarm": "[parameters('hostingPlanName')]"
-      },
-      "resources": [
-        {
-          "apiVersion": "2014-11-01",
-          "name": "web",
-          "type": "config",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+      {
+        "apiVersion": "2014-06-01",
+        "name": "web",
+        "type": "config",
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+        ],
+        "properties": {
+          "phpVersion": "5.5",
+          "netFrameworkVersion": "v4.0",
+          "use32BitWorkerProcess": false, /* 64-bit platform */
+          "webSocketsEnabled": true,
+          "alwaysOn": true,
+          "requestTracingEnabled": true, /* Failed request tracing, aka 'freb' */
+          "httpLoggingEnabled": true, /* IIS logs (aka Web server logging) */
+          "logsDirectorySizeLimit": 40, /* 40 MB limit for IIS logs */
+          "detailedErrorLoggingEnabled": true, /* Detailed error messages  */
+          "remoteDebuggingEnabled": true,
+          "remoteDebuggingVersion": "VS2013",
+          "SITE_FLAVOR": "nodesrv",
+          "virtualApplications": [
+            {
+              "virtualPath": "/",
+              "physicalPath": "site\\wwwroot"
+            },
+            {
+              "virtualPath": "/MyApp",
+              "physicalPath": "site\\wwwroot"
+            },
           ],
-          "properties": {
-            "phpVersion": "5.5",
-            "netFrameworkVersion": "v4.0",
-            "use32BitWorkerProcess": false, /* 64-bit platform */
-            "webSocketsEnabled": true,
-            "alwaysOn": true,
-            "requestTracingEnabled": true, /* Failed request tracing, aka 'freb' */
-            "httpLoggingEnabled": true, /* IIS logs (aka Web server logging) */
-            "logsDirectorySizeLimit": 40, /* 40 MB limit for IIS logs */
-            "detailedErrorLoggingEnabled": true, /* Detailed error messages  */
-            "remoteDebuggingEnabled": true,
-            "remoteDebuggingVersion": "VS2013",
-
-            "virtualApplications": [
-              {
-                "virtualPath": "/",
-                "physicalPath": "site\\wwwroot"
-              },
-              {
-                "virtualPath": "/MyApp",
-                "physicalPath": "site\\wwwroot"
-              },
-            ],
 
             "defaultDocuments": [
                 "index.html",
