@@ -63,7 +63,7 @@
     },
     "variables": { 
       "siteNameProxy": "[concat(parameters('siteName'), '-proxy')]",
-      "siteNameServer": "[concat(parameters('siteName'), '-srv')]"
+      "siteNameSrv": "[concat(parameters('siteName'), '-srv')]"
     },
     "resources":[
     {
@@ -80,7 +80,7 @@
     },
       {
         "apiVersion": "2015-04-01",
-        "name": "[variables('siteNameServer')]",
+        "name": "[variables('siteNameSrv')]",
         "type": "Microsoft.Web/sites",
         "location": "[parameters('siteLocation')]",
         "dependsOn": [
@@ -95,7 +95,7 @@
             "type": "config",
             "name": "web",
             "dependsOn": [
-              "[concat('Microsoft.Web/Sites/', variables('siteNameServer'))]"
+              "[concat('Microsoft.Web/Sites/', variables('siteNameSrv'))]"
             ],
             "properties": {
               "webSocketsEnabled": true,
@@ -114,7 +114,7 @@
             "name": "appsettings",
             "type": "config",
             "dependsOn": [
-              "[resourceId('Microsoft.Web/Sites', variables('siteNameServer'))]"
+              "[resourceId('Microsoft.Web/Sites', variables('siteNameSrv'))]"
             ],
             "properties": {
               "SITE_FLAVOR": "nodesrv"
@@ -125,7 +125,7 @@
             "name": "web",
             "type": "sourcecontrols",
             "dependsOn": [
-              "[resourceId('Microsoft.Web/Sites', variables('siteNameServer'))]"
+              "[resourceId('Microsoft.Web/Sites', variables('siteNameSrv'))]"
             ],
             "properties": {
               "RepoUrl": "[parameters('repoURL')]",
