@@ -167,7 +167,7 @@
             "name": "appsettings",
             "type": "config",
             "dependsOn": [
-              "[resourceId('Microsoft.Web/Sites', parameters('siteName'), '-proxy')]"
+              "[resourceId('Microsoft.Web/Sites', [concat(parameters('siteName'), '-proxy')])]"
             ],
             "properties": {
               "SITE_FLAVOR": "nodeproxy"
@@ -178,7 +178,7 @@
             "name": "web",
             "type": "sourcecontrols",
             "dependsOn": [
-              "[resourceId('Microsoft.Web/Sites', parameters('siteName'), '-proxy')]"
+              "[resourceId('Microsoft.Web/Sites', [concat(parameters('siteName'), '-proxy')])]"
             ],
             "properties": {
               "RepoUrl": "[parameters('repoURL')]",
