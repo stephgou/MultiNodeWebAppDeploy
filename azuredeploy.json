@@ -177,7 +177,7 @@
               "[resourceId('Microsoft.Web/Sites', parameters('siteName2'))]"
             ],
             "properties": {
-              "SITE_FLAVOR": "nodesrv"
+              "SITE_FLAVOR": "nodeproxy"
             }
           },
           {
