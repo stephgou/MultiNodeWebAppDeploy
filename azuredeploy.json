@@ -63,7 +63,7 @@
     },
     "variables": { 
       "siteNameProxy": "[concat(parameters('siteName'), '-proxy')]",
-      "siteNameSrv": "[concat(parameters('siteName'), '-srv')]"
+      "siteNameSrv": "[parameters('siteName')]"
     },
     "resources":[
     {
