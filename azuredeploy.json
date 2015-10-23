@@ -16,7 +16,6 @@
         },
         "siteLocation": {
             "type": "string",
-            "defaultValue": "East US",
             "metadata": {
                 "description": "The location to use for creating the web app and hosting plan. It must be one of the Azure locations that support web apps."
             }
@@ -29,7 +28,6 @@
                 "Basic",
                 "Standard"
             ],
-            "defaultValue": "Free",
             "metadata": {
                 "description": "The pricing tier for the hosting plan."
             }
