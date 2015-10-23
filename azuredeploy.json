@@ -59,6 +59,13 @@
             "metadata": { 
                 "description": "The branch of the GitHub repository to use."
             }
+        },
+        "SiteName2": {
+            "type": "string",
+            "defaultValue": "azazazmaster",
+            "metadata": { 
+                "description": "Will it work"
+            }
         }
     },
   "resources":[
