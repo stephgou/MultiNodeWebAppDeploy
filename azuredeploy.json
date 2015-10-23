@@ -62,6 +62,7 @@
         }
     },
     "variables": { 
+        "siteNameServer": "[concat(parameters('siteName'), '-server')]"
         "siteNameProxy": "[concat(parameters('siteName'), '-proxy')]"
     },
     "resources":[
@@ -79,7 +80,7 @@
     },
     {
       "apiVersion":"2015-04-01",
-      "name":"[parameters('siteName')]",
+      "name":"[variables('siteNameServer']",
       "type":"Microsoft.Web/sites",
       "location":"[parameters('siteLocation')]",
       "dependsOn":[
@@ -94,7 +95,7 @@
           "type": "config",
           "name": "web",
           "dependsOn": [
-            "[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
+            "[concat('Microsoft.Web/Sites/', variables('siteNameServer')]"
           ],
           "properties": {
             "webSocketsEnabled": true,
@@ -113,7 +114,7 @@
           "name": "appsettings",
           "type": "config",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+            "[resourceId('Microsoft.Web/Sites', variables('siteNameServer')]"
           ],
           "properties": {
             "SITE_FLAVOR": "nodesrv"
@@ -124,7 +125,7 @@
           "name":"web",
           "type":"sourcecontrols",
           "dependsOn":[
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+            "[resourceId('Microsoft.Web/Sites', variables('siteNameServer')]"
           ],
           "properties":{
             "RepoUrl":"[parameters('repoURL')]",
