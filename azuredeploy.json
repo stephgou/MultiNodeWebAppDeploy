@@ -141,7 +141,7 @@
                 "displayName": "yokdsqkdqdkqsmsqd"
             },
             "properties": {
-                "name": "[yokdsqkdqdkqsmsqd]",
+                "name": "yokdsqkdqdkqsmsqd",
                 "serverFarm": "[parameters('hostingPlanName')]"
             }
         }
