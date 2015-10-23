@@ -82,17 +82,17 @@
       }
     },
     {
-      "apiVersion":"2015-04-01",
-      "name":"[parameters('siteName')]",
-      "type":"Microsoft.Web/sites",
-      "location":"[parameters('siteLocation')]",
-      "dependsOn":[
+      "apiVersion": "2015-04-01",
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('siteLocation')]",
+      "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
       ],
-      "properties":{
-        "serverFarmId":"[parameters('hostingPlanName')]"
+      "properties": {
+        "serverFarmId": "[parameters('hostingPlanName')]"
       },
-      "resources":[
+      "resources": [
         {
           "apiVersion": "2014-04-01",
           "type": "config",
@@ -112,12 +112,69 @@
             ]
           }
         },
-         {
+        {
           "apiVersion": "2014-11-01",
           "name": "appsettings",
           "type": "config",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "SITE_FLAVOR": "nodesrv"
+          }
+        },
+        {
+          "apiVersion": "2015-04-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration": true
+          }
+        }
+      ]
+    }
+        {
+      "apiVersion":"2015-04-01",
+      "name":"[parameters('siteName2')]",
+      "type":"Microsoft.Web/sites",
+      "location":"[parameters('siteLocation')]",
+      "dependsOn":[
+        "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+      ],
+      "properties":{
+        "serverFarmId":"[parameters('hostingPlanName')]"
+      },
+      "resources":[
+        {
+          "apiVersion": "2014-04-01",
+          "type": "config",
+          "name": "web",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', parameters('siteName2'))]"
+          ],
+          "properties": {
+            "webSocketsEnabled": true,
+            "virtualApplications": [
+              {
+                "virtualPath": "/",
+                "physicalPath": "site\\wwwroot",
+                "preloadEnabled": false,
+                "virtualDirectories": null
+              }
+            ]
+          }
+        },
+         {
+          "apiVersion": "2014-11-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName2'))]"
           ],
           "properties": {
             "SITE_FLAVOR": "nodesrv"
@@ -128,7 +185,7 @@
           "name":"web",
           "type":"sourcecontrols",
           "dependsOn":[
-            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName2'))]"
           ],
           "properties":{
             "RepoUrl":"[parameters('repoURL')]",
