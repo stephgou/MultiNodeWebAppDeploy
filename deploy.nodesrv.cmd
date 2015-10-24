@@ -67,7 +67,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 )
 
 :: 3. Copy config.nodesrv
-::Call copy "%DEPLOYMENT_SOURCE%\config.nodesrv" "%DEPLOYMENT_TARGET%\config.json" 
+Call copy "%DEPLOYMENT_SOURCE%\config.nodesrv" "%DEPLOYMENT_TARGET%\config.json" 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

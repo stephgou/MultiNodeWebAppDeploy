@@ -67,7 +67,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 )
 
 :: 3. Copy config.proxy
-::Call copy "%DEPLOYMENT_SOURCE%\config.proxy" "%DEPLOYMENT_TARGET%\config.json" 
+Call copy "%DEPLOYMENT_SOURCE%\config.proxy" "%DEPLOYMENT_TARGET%\config.json" 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
