@@ -184,7 +184,7 @@
             "type": "sourcecontrols",
             "dependsOn": [
               "[resourceId('Microsoft.Web/Sites', variables('siteNameProxy'))]",
-              "[resourceId('Microsoft.Web/Sites/config', variables('siteNameSrv'), 'appsettings')]"
+              "[resourceId('Microsoft.Web/Sites/config', variables('siteNameProxy'), 'appsettings')]"
             ],
             "properties": {
               "RepoUrl": "[parameters('repoURL')]",
